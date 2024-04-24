@@ -1,0 +1,85 @@
+import robocode.*;
+
+public class RecebaChatgpt extends AdvancedRobot {
+    
+    public void run() {
+        // Define cores do robô
+        setColors(java.awt.Color.GREEN, java.awt.Color.GREEN, java.awt.Color.GREEN);
+        
+        // Loop principal do robô
+        while (true) {
+            // Movimentação
+            move();
+            // Atirar
+            fire();
+            // Executar movimentos defensivos
+            dodge();
+            // Executar varredura para mirar nos inimigos
+            scan();
+            // Executar ações de energia
+            manageEnergy();
+        }
+    }
+    
+    // Método para movimentar o robô
+    private void move() {
+        ahead(100); // Avança 100 pixels
+        back(50);  // Recua 50 pixels
+        turnLeft(90); // Gira 90 graus para a esquerda
+        turnRight(90); // Gira 90 graus para a direita
+    }
+    
+    // Método para atirar
+    private void fire() {
+        // Verifica se existe algum inimigo próximo
+        if (getOthers() > 0) {
+            // Ajusta a mira para o inimigo mais próximo
+            turnGunRight(getHeading() - getGunHeading() + getBearing());
+            // Atira com potência máxima
+            fire(3);
+        }
+    }
+    
+    // Método para desviar de tiros
+    private void dodge() {
+        // Realiza uma verificação de perigo
+        if (getEnergy() < 50) {
+            // Se a energia for baixa, move-se rapidamente
+            setMaxVelocity(8);
+        } else {
+            // Caso contrário, move-se normalmente
+            setMaxVelocity(4);
+        }
+    }
+    
+    // Método para gerenciar a energia do robô
+    private void manageEnergy() {
+        // Mantém sempre uma certa quantidade de energia
+        if (getEnergy() < 50) {
+            // Se a energia estiver baixa, ativa o escudo
+            setShield(true);
+        } else {
+            // Caso contrário, desativa o escudo
+            setShield(false);
+        }
+    }
+    
+    // Método para lidar com eventos de escaneamento
+    public void onScannedRobot(ScannedRobotEvent e) {
+        // Quando um robô é escaneado, atira
+        fire();
+    }
+    
+    // Método para lidar com eventos de colisão
+    public void onHitRobot(HitRobotEvent e) {
+        // Se colidir com outro robô, recua
+        back(50);
+    }
+    
+    // Método para lidar com eventos de ataque recebido
+    public void onHitByBullet(HitByBulletEvent e) {
+        // Ao ser atingido por um tiro, executa uma manobra defensiva
+        turnLeft(45);
+        ahead(50);
+    }
+}
