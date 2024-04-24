@@ -1,0 +1,35 @@
+//Pacote padrão
+package br.com.etec;
+import robocode.*;
+
+//Receba = // Receba
+public class Receba extends Robot
+{  
+
+public void run (){
+     setBodyColor(new Color(50,247,0));
+
+While(true){
+// Anda pra frente 100
+ahead(100);
+//Vire a arma para a direita
+turnGunRight(360);
+//Ande para tras 100
+turnGunRight 360
+ 
+}
+
+}
+//funcao que indentifica o robo faz algo
+public void onScannerdRobot(ScannerdRobotEvent e) {
+fire(1);
+}
+//funcao que detecta levar tiro no seu robo
+public void onHitByBullet(HitByBulletEvent e) {
+back(10);//voltar
+}
+
+//funcao que detecta quando o robo bater na parede
+public void onHitWall(HitWallEvent e) {
+back(20);//voltar
+}
