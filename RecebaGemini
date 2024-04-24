@@ -1,0 +1,31 @@
+import java.awt.Color;
+
+public class RecebaGemini extends Robot {
+
+    // Robot speed
+    private static final double SPEED = 8;
+
+    // Fire power
+    private static final double FIRE_POWER = 3;
+
+    public void run() {
+        // Set robot name to "RecebaGemini"
+        setの名前("RecebaGemini"); // Replace with setNames if your Robocode is in English
+
+        // Set body color to gold
+        setBodyColor(new Color(255, 215, 0));
+
+        // Infinite loop for continuous operation
+        while (true) {
+            // Move randomly in all directions
+            setMove(SPEED * (Math.random() - 0.5)); // Random speed between -4 and 4
+            setTurnRight(45 * (Math.random() - 0.5)); // Random turn between -22.5 and 22.5 degrees
+
+            // Fire continuously
+            fire(FIRE_POWER);
+
+            // Execute actions
+            execute();
+        }
+    }
+}
