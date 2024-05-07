@@ -1,31 +1,36 @@
-import java.awt.Color;
+import robocode.*;
 
-public class RecebaGemini extends Robot {
+public class WalkieTalkieBot extends AdvancedRobot {
+    private String myName;
+    private String enemyName;
 
-    // Robot speed
-    private static final double SPEED = 8;
-
-    // Fire power
-    private static final double FIRE_POWER = 3;
+    public WalkieTalkieBot() {
+        myName = getName();
+    }
 
     public void run() {
-        // Set robot name to "RecebaGemini"
-        setの名前("RecebaGemini"); // Replace with setNames if your Robocode is in English
+        setBodyColor(new Color(0, 255, 0)); // Set robot color to green
+        setGunColor(new Color(0, 255, 0));
+        setRadarColor(new Color(0, 255, 0));
 
-        // Set body color to gold
-        setBodyColor(new Color(255, 215, 0));
-
-        // Infinite loop for continuous operation
         while (true) {
-            // Move randomly in all directions
-            setMove(SPEED * (Math.random() - 0.5)); // Random speed between -4 and 4
-            setTurnRight(45 * (Math.random() - 0.5)); // Random turn between -22.5 and 22.5 degrees
+            turnGunRight(360);
+            turnRight(45);
+            ahead(100);
+            fire(1);
+            setBroadcastMessage(myName + ": Hello!");
+            scan();
+        }
+    }
 
-            // Fire continuously
-            fire(FIRE_POWER);
+    public void onScannedRobot(ScannedRobotEvent e) {
+        enemyName = e.getName();
+    }
 
-            // Execute actions
-            execute();
+    public void onMessageReceived(MessageEvent e) {
+        if (e.getMessage().contains("Hello!")) {
+            System.out.println(enemyName + ": Hello!");
+            setBroadcastMessage(myName + ": Hi again!");
         }
     }
 }
