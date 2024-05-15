@@ -1,2 +1,0 @@
-# receba
-receba no Robocode

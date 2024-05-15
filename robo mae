@@ -1,0 +1,51 @@
+import robocode.*;
+import java.awt.Color;
+
+public class Elidiane extends AdvancedRobot {
+    
+    public void run() {
+        // Definir as cores do robô
+        setColors(Color.black, Color.black, Color.black);
+
+        // Loop principal do robô
+        while (true) {
+            // Movimento: ir para frente indefinidamente
+            ahead(100);
+
+            // Movimento: mudar de direção aleatoriamente
+            turnRight(Math.random() * 360);
+
+            // Chamada para verificar a mira e desviar dos tiros
+            checkGunAndDodge();
+        }
+    }
+
+    // Método para verificar a mira e desviar dos tiros
+    public void checkGunAndDodge() {
+        // Verificar se há um tiro chegando
+        if (getGunHeat() == 0) {
+            // Gira a torreta para mirar precisamente no inimigo mais próximo
+            turnGunRight(getHeading() - getGunHeading() + getRadarHeading());
+            // Dispara
+            fire(3);
+        }
+
+        // Verificar se há um tiro próximo
+        if (getEnergy() < 20) {
+            // Movimento: desviar para o lado
+            turnRight(90);
+            ahead(50);
+        }
+    }
+
+    // Método chamado quando o robô detecta um inimigo
+    public void onScannedRobot(ScannedRobotEvent e) {
+        // Movimento: mudar a direção para o inimigo
+        turnRight(e.getBearing());
+        // Movimento: voltar um pouco para trás
+        back(20);
+    }
+}
+
+
+    
